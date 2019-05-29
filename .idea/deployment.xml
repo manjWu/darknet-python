@@ -5,7 +5,7 @@
       <paths name="wmj">
         <serverdata>
           <mappings>
-            <mapping deploy="/root/wmj-docker/darknet-python" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/root/wmj-docker/darknet-python" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
