@@ -1,7 +1,9 @@
+import sys
 import time
 import random
 import numpy as np
 import cv2
+sys.path.append('../darknet-python')
 import darknet as dn
 
 
@@ -10,9 +12,9 @@ import darknet as dn
 
 
 # prepare YOLO
-net = dn.load_net(str.encode("../cfg/yolov3-tiny.cfg"),
-                  str.encode("../drone/yolov3-tiny.weights"), 0)
-meta = dn.load_meta(str.encode("../cfg/coco.data"))
+net = dn.load_net(str.encode("../darknet-mac/cfg/yolov3-tiny.cfg"),
+                  str.encode("../darknet-mac/drone/yolov3-tiny.weights"), 0)
+meta = dn.load_meta(str.encode("../darknet-mac/cfg/coco.data"))
 # net = dn.load_net(str.encode("drone/yolov3-drone1-tiny.cfg"),
 #                   str.encode("drone/yolov3-drone1-tiny_10200.weights"), 0)
 # meta = dn.load_meta(str.encode("drone/drone1.data"))
