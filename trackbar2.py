@@ -1,6 +1,11 @@
 import cv2
 import time
 
+'''
+使用r/s实现视频+滑块的单步模式播放以及持续播放（滑块随动）速度很慢
+改成滑块不随动
+'''
+
 video = '/Volumes/MachsionHD/drone_实验视频/实验原始视频（部分转换格式）/20190403紫金港/20190403紫金港112m-100m-实验1/20190403紫金港全景112m-100m.mp4'
 cv2.namedWindow('video')
 cv2.namedWindow('result')

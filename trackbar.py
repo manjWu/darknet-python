@@ -1,12 +1,11 @@
 
-'''
-使用r/s实现视频+滑块的单步模式播放以及持续播放（滑块随动）
-'''
-
-
-
 import cv2
 import time
+
+'''
+使用r/s实现视频+滑块的单步模式播放以及持续播放（滑块随动）速度很慢
+'''
+
 
 video = '/Volumes/MachsionHD/drone_实验视频/fixed-wing.mp4'
 cv2.namedWindow('video')
