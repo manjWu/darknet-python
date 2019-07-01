@@ -14,8 +14,6 @@ import cv2
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
-
-
 def Normalization_plus(M):
     '''
     :param M:
@@ -43,11 +41,14 @@ def getDownsamplingImg(img, para=0.5):
     img = cv2.resize(img,None, fx=para,fy=para,interpolation = cv2.INTER_AREA)
     return img
 
+def downSamplingshow(windowname, img, gain):
+    cv2.imshow(windowname, getDownsamplingImg(img, gain))
+
 def drawRectangle(cnts,img, rect_color):
     for c in cnts:
         x, y, w, h = cv2.boundingRect(c)
         area = w*h
-        print("检测到运动区域大小为：",w * h)
+        # print("检测到运动区域大小为：",w * h)
         if w * h > 10 and w * h < 200:
             # 连通域要足够大才标box
             cv2.rectangle(img, (x, y), (x + w, y + h),rect_color, 1)
@@ -68,7 +69,7 @@ def im2double(im):
 
 
 ############################### SR ##########################################################
-def SR(inImg):
+def SR(inImg,SR_threshhold):
     # im2double 将图像转化为双精度值
     # 将彩色图像转为灰度图像（即亮度）后进行二维离散傅立叶变换
     # inImg = cv2.cvtColor(inImg, cv2.COLOR_BGR2GRAY)
@@ -91,8 +92,17 @@ def SR(inImg):
 
     es = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (4, 4))
     saliencyMap = cv2.dilate(saliencyMap, es, iterations=2)  # 膨胀
+    # 转化格式为unit8
+    # saliencyMap = np.clip(saliencyMap, 0, 255)  # 归一化也行
+    saliencyMap = np.array(saliencyMap*255, np.uint8)
+    # print(np.where(saliencyMap==np.max(saliencyMap)))
+    # print(np.max(saliencyMap))
+    # print("-----------------")
+    saliencyMap = cv2.threshold(saliencyMap, SR_threshhold, 255, cv2.THRESH_BINARY)[1]
+    (_, cnts, _) = cv2.findContours(saliencyMap.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_KCOS)
 
-    return saliencyMap
+
+    return saliencyMap, cnts
 
 ############################### frame_diff ##########################################################
 def frame_diff(cur_frame,pre_frame, diff_threshhold):# 输入灰度图
